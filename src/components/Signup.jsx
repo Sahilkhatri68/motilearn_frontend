@@ -23,7 +23,13 @@ function Signup() {
         phone_no: phone_no,
       })
       .then((res) => {
-        console.log(res.data);
+        console.log(res.data.status);
+        alert("Resigster Success");
+        setTimeout(() => {
+          if (res.data.status === "success") {
+            window.location.href = "/login";
+          }
+        }, 1000);
       })
       .catch((err) => {
         alert(err.response.data.message);
