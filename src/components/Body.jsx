@@ -29,7 +29,7 @@ function Body() {
   console.log(API);
   const Handle_person_logout = ({ API }) => {
     axios
-      .get(`${API}/personlogout`, {
+      .get(`https://motilearn-backend.onrender.com/api/personlogout`, {
         withCredentials: true,
       })
       .then((res) => {
