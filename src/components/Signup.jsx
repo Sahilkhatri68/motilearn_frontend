@@ -13,29 +13,42 @@ function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [phone_no, setPhone_no] = useState();
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [gender, setGender] = useState("");
+  const [dob, setDob] = useState();
+
+  const handleGenderChange = (e) => {
+    setGender(e.target.value);
+  };
 
   const HandleSubmitData = (e) => {
     e.preventDefault(); //for stop reloading
 
-    axios
-      .post(`${API}/newperson`, {
-        name: name,
-        email: email,
-        password: password,
-        phone_no: phone_no,
-      })
-      .then((res) => {
-        console.log(res.data.status);
-        alert("Resigster Success");
-        setTimeout(() => {
-          if (res.data.status === "success") {
-            window.location.href = "/login";
-          }
-        }, 1000);
-      })
-      .catch((err) => {
-        alert(err.response.data.message);
-      });
+    if (password === confirmPassword) {
+      axios
+        .post(`${API}/newperson`, {
+          name: name,
+          email: email,
+          password: password,
+          phone_no: phone_no,
+          gender: gender,
+          dob: dob,
+        })
+        .then((res) => {
+          console.log(res.data.status);
+          alert("Resigster Success");
+          setTimeout(() => {
+            if (res.data.status === "success") {
+              window.location.href = "/login";
+            }
+          }, 1000);
+        })
+        .catch((err) => {
+          alert(err.response.data.message);
+        });
+    } else {
+      alert("Password does not matched");
+    }
   };
 
   // code to stop right click on div
@@ -131,6 +144,39 @@ function Signup() {
                     htmlFor="password"
                     className="text-sm font-semibold text-gray-500"
                   >
+                    Confirm Password
+                  </label>
+                </div>
+                <input
+                  type="password"
+                  id="password"
+                  name={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                />
+              </div>
+              <div className="flex flex-col space-y-1">
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="text-sm font-semibold text-gray-500"
+                  >
+                    D.O.B
+                  </label>
+                </div>
+                <input
+                  type="date"
+                  name={dob}
+                  onChange={(e) => setDob(e.target.value)}
+                  className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                />
+              </div>
+              <div className="flex flex-col space-y-1">
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="text-sm font-semibold text-gray-500"
+                  >
                     Phone No.
                   </label>
                 </div>
@@ -141,6 +187,26 @@ function Signup() {
                   onChange={(e) => setPhone_no(e.target.value)}
                   className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                 />
+              </div>
+              <div className="flex flex-col space-y-1">
+                <div className="flex items-center justify-between">
+                  <label
+                    htmlFor="password"
+                    className="text-sm font-semibold text-gray-500"
+                  >
+                    Gender
+                  </label>
+                </div>
+                <select
+                  className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                  value={gender}
+                  onChange={handleGenderChange}
+                >
+                  <option>Select...</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
               </div>
 
               <div className="flex flex-col space-y-5">
