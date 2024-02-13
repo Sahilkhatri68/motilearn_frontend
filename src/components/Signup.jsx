@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API } from "./API/API";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 const logo = require("./images/Trans_Logo_Golden.png");
@@ -38,9 +38,27 @@ function Signup() {
       });
   };
 
+  // code to stop right click on div
+  useEffect(() => {
+    const handleContextMenu = (event) => {
+      event.preventDefault();
+    };
+
+    const ele = document.getElementById("no_right_click");
+    ele.addEventListener("contextmenu", handleContextMenu);
+
+    // Cleanup the event listener when the component is unmounted
+    return () => {
+      ele.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
   return (
     <div>
-      <div className="flex items-center min-h-screen p-4 bg-gray-100 justify-center">
+      <div
+        id="no_right_click"
+        className="flex items-center min-h-screen p-4 bg-gray-100 justify-center"
+      >
         <div className="flex flex-col overflow-hidden justify-center bg-white rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md">
           <div className="p-4 py-6 text-white bg-[#0F1131] md:w-80 md:flex-shrink-0 md:flex md:flex-col md:items-center md:justify-evenly">
             <img src={logo} alt="" />
