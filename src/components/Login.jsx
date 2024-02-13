@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API } from "./API/API";
+import IconButton from "@mui/material/IconButton";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { Link, useNavigate } from "react-router-dom";
 const logo = require("./images/Trans_Logo_Golden.png");
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // code to show and hide password
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const HandleLogin = (e) => {
     e.preventDefault();
@@ -57,16 +65,6 @@ function Login() {
         <div className="flex flex-col overflow-hidden justify-center bg-white rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md">
           <div className="p-4 py-6 text-white bg-[#0F1131] md:w-80 md:flex-shrink-0 md:flex md:flex-col md:items-center md:justify-evenly">
             <img src={logo} alt="" />
-            <p className="mt-6 text-sm text-center text-gray-300">
-              Read our{" "}
-              <a href="#" className="underline">
-                terms
-              </a>{" "}
-              and{" "}
-              <a href="#" className="underline">
-                conditions
-              </a>
-            </p>
           </div>
           <div className="p-5 bg-white md:flex-1">
             <h3 className="my-4 text-2xl font-semibold text-gray-700">
@@ -97,13 +95,28 @@ function Login() {
                     Password
                   </label>
                 </div>
-                <input
-                  type="password"
-                  id="password"
-                  name={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
-                />
+                <div className="flex items-center">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="password"
+                    name={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="px-4 w-full py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
+                  />
+                  <span className="flex justify-center">
+                    <IconButton
+                      onClick={togglePasswordVisibility}
+                      aria-label="delete"
+                      size="small"
+                    >
+                      {showPassword ? (
+                        <RemoveRedEyeIcon fontSize="inherit" />
+                      ) : (
+                        <VisibilityOffIcon fontSize="inherit" />
+                      )}
+                    </IconButton>
+                  </span>
+                </div>
               </div>
 
               <div>
