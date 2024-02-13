@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 const logo = require("./images/Trans_Logo_Golden.png");
 
 function Signup() {
+  // stop right click
+
   // code to register persons/students in DB with usestate
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

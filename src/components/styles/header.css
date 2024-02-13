@@ -1,0 +1,88 @@
+/* styles.css */
+
+/* Reset some default styles */
+body,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0f1131;
+  padding: 15px;
+  z-index: 1;
+  position: fixed;
+  width: 100%;
+}
+
+.logo {
+  color: #eda22d;
+  font-size: 1.5em;
+}
+
+.menu-toggle {
+  cursor: pointer;
+  display: none;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: white;
+  margin: 5px 0;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+}
+
+.nav-list li {
+  margin: 0 15px;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+}
+
+.nav-list a:hover {
+  color: #eda22d;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    position: absolute;
+    top: 55px;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    text-align: center;
+    display: none;
+  }
+
+  .nav-list.open {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-list li {
+    margin: 15px 0;
+  }
+
+  .navbar.open {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
