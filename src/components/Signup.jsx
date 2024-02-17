@@ -1,6 +1,6 @@
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import IconButton from "@mui/material/IconButton";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 import { API } from "./API/API";
 import React, { useEffect } from "react";
@@ -16,6 +16,9 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState();
+  const [modalAction, setModalAction] = useState(false); // state for handling popup box for OTP input
+
+  // code to hadnle Modal
 
   // code to show and hide password
   const [showPassword, setShowPassword] = useState(false);
@@ -73,6 +76,27 @@ function Signup() {
       ele.removeEventListener("contextmenu", handleContextMenu);
     };
   }, []);
+
+  // style for modal popup
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    border: "1px  #000",
+    boxShadow: 24,
+    p: 2,
+  };
+
+  // code to open and close modal
+  const handleOpenModal = () => {
+    setModalAction(true);
+  };
+  const handleCloseModal = () => {
+    setModalAction(false);
+  };
 
   return (
     <div>
@@ -166,7 +190,7 @@ function Signup() {
                 <div className="flex items-center">
                   <input
                     type={showPassword ? "text" : "password"}
-                    id="password"
+                    id="confirm-password"
                     name={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     className="px-4 w-full py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
@@ -188,11 +212,8 @@ function Signup() {
               </div>
               <div className="flex flex-col space-y-1">
                 <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="text-sm font-semibold text-gray-500"
-                  >
-                    D.O.B
+                  <label className="text-sm font-semibold text-gray-500">
+                    Date of birth
                   </label>
                 </div>
                 <input
@@ -204,10 +225,7 @@ function Signup() {
               </div>
               <div className="flex flex-col space-y-1">
                 <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="text-sm font-semibold text-gray-500"
-                  >
+                  <label className="text-sm font-semibold text-gray-500">
                     Phone No.
                   </label>
                 </div>
@@ -221,10 +239,7 @@ function Signup() {
               </div>
               <div className="flex flex-col space-y-1">
                 <div className="flex items-center justify-between">
-                  <label
-                    htmlFor="password"
-                    className="text-sm font-semibold text-gray-500"
-                  >
+                  <label className="text-sm font-semibold text-gray-500">
                     Gender
                   </label>
                 </div>
@@ -236,6 +251,7 @@ function Signup() {
                   <option>Select...</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
+                  <option value="Transgender">Transgender</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
