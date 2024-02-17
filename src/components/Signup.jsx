@@ -1,3 +1,4 @@
+import Cookie from "js-cookie";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import IconButton from "@mui/material/IconButton";
@@ -16,11 +17,11 @@ function Signup() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [gender, setGender] = useState("");
   const [dob, setDob] = useState();
+  const [email_otp, setEmail_otp] = useState("");
   const [modalAction, setModalAction] = useState(false); // state for handling popup box for OTP input
   const [emailotpbox, setEmailotpbox] = useState(false);
   // code to hadnle Modal
   const handleotp = (e) => {
-    e.preventDefault();
     setEmailotpbox(true);
   };
   // code to show and hide password
@@ -33,12 +34,12 @@ function Signup() {
   const handleGenderChange = (e) => {
     setGender(e.target.value);
   };
-
   // code to post data into DB
   const HandleSubmitData = (e) => {
     e.preventDefault(); //for stop reloading
 
     if (password === confirmPassword) {
+      handleotp();
       axios
         .post(
           `${API}/newperson`,
@@ -49,17 +50,17 @@ function Signup() {
             phone_no: phone_no,
             gender: gender,
             dob: dob,
+            email_otp: email_otp,
           },
           {
             withCredentials: true,
           }
         )
         .then((res) => {
-          console.log(res.data.status);
           alert("Resigster Success");
           setTimeout(() => {
             if (res.data.status === "success") {
-              window.location.href = "/login";
+              // window.location.href = "/login";
             }
           }, 1000);
         })
@@ -162,10 +163,10 @@ function Signup() {
                       Enter OTP
                     </label>
                     <input
-                      type="nu,ber"
-                      // id="email"
-                      // name={email}
-                      // onChange={(e) => setEmail(e.target.value)}
+                      type="number"
+                      id="email_otp"
+                      name={email_otp}
+                      onChange={(e) => setEmail_otp(e.target.value)}
                       className="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200"
                     />
                   </div>
@@ -286,14 +287,6 @@ function Signup() {
               </div>
 
               <div className="flex flex-col space-y-5">
-                <div className="flex flex-col space-y-4">
-                  <button
-                    onClick={handleotp}
-                    className="w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-[#0F1131] rounded-md shadow hover:bg-[#EDA22D] focus:outline-none focus:ring-blue-200 focus:ring-4"
-                  >
-                    Send OTP
-                  </button>
-                </div>
                 <div className="flex flex-col space-y-4">
                   <button
                     onClick={HandleSubmitData}
